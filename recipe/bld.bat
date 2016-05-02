@@ -14,3 +14,25 @@ for %%f in ("%LIBRARY_PREFIX%\miktex\miktex\bin\*.exe") do (
 )
 if errorlevel 1 exit 1
 
+rem DO NOT INSTALL PACKAGES AS ADMIN: it adds a lot of cache files which have
+rem the path hardcoded to the current locations, so let that happen in the user
+rem install and on the users machine:
+
+rem Change the install variant to a regular one, so that latex packages
+rem installed by the user go into the users home directory...
+(
+echo ;;; MiKTeX startup information
+echo.
+echo ;;; The effect of this file is that the main install location in the conda env
+echo ;;; is not touched by the latex package installer and all packages are installed
+echo ;;; into a location under USERPROFILE.
+echo.
+echo [Auto]
+echo Config=Regular
+echo.
+echo [PATHS]
+echo CommonInstall=..\..
+echo CommonData=..\..
+echo CommonConfig=..\..
+) > "%PREFIX%\Library\miktex\miktex\config\miktexstartup.ini"
+
