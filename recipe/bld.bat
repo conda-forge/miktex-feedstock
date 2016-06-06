@@ -9,7 +9,7 @@ if errorlevel 1 exit 1
 
 rem latex tools must be run from miktex tree - add batch file for everything
 for %%f in ("%LIBRARY_PREFIX%\miktex\miktex\bin\*.exe") do (
-	echo @%%~dp0\..\Library\miktex\miktex\bin\%%~nf %%* >> "%SCRIPTS%\%%~nf.bat"
+	echo @"%%~dp0\..\Library\miktex\miktex\bin\%%~nf" %%* >> "%SCRIPTS%\%%~nf.bat"
 )
 if errorlevel 1 exit 1
 
