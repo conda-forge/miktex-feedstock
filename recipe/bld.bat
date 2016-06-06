@@ -1,30 +1,22 @@
 
-
-7za x miktex-portable-%PKG_VERSION%.exe -o%LIBRARY_PREFIX%\miktex >NUL
+7za x miktex-portable-%PKG_VERSION%.exe -o%LIBRARY_PREFIX%\miktex > NUL
 if errorlevel 1 exit 1
 
 rem SCRIPTS dir should already be created by 7za install
 mkdir "%SCRIPTS%"
 if errorlevel 1 exit 1
 
-rem latex tools must be run from miktex tree - add batch file for everything
-for %%f in ("%LIBRARY_PREFIX%\miktex\miktex\bin\*.exe") do (
-	echo @"%%~dp0\..\Library\miktex\miktex\bin\%%~nf" %%* >> "%SCRIPTS%\%%~nf.bat"
-)
-if errorlevel 1 exit 1
-
 rem build the wrapper: pandoc expects commands like pdflatex to be exe files,
 rem batch files do not work :-/
 
-rem assumes that go is in path, which seems to be true on appveyor
-set GOPATH=c:\gopath
-go get "github.com/kardianos/osext"
-go build -ldflags="-s -w" "%RECIPE_DIR%\wrapper.go"
+rem compile using the MS compilers
+cl -DGUI=0 /MT /Fewrapper.exe "wrapper.c"
 if errorlevel 1 exit 1
 
-rem add exe versions for the most important commands--which pandoc tries to
-rem run, as the wrapper.exe is big ...
-for /F %%f in ("pdflatex lualatex xelatex") do copy "wrapper.exe" "%SCRIPTS%\%%f.exe"
+rem add exe versions for all commands...
+for %%f in ("%LIBRARY_PREFIX%\miktex\miktex\bin\*.exe") do (
+	copy "wrapper.exe" "%SCRIPTS%\%%~nf.exe"
+)
 if errorlevel 1 exit 1
 
 del wrapper.exe

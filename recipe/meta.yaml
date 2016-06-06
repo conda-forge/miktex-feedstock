@@ -17,10 +17,10 @@ build:
 requirements:
   build:
     - 7za
+    - m2w64-toolchain # to build the wrapper
 
 test:
   commands:
-    - pdflatex.bat --help
     - pdflatex.exe --help
     - mpm --help
 
