@@ -1,5 +1,8 @@
 
-7za x miktex-portable-%PKG_VERSION%.exe -o%LIBRARY_PREFIX%\miktex > NUL
+rem I want to see my commands when they go wrong...
+echo on
+
+7za x miktex-portable-%PKG_VERSION%.exe -o%LIBRARY_PREFIX%\miktex
 if errorlevel 1 exit 1
 
 rem SCRIPTS dir should already be created by 7za install
@@ -7,19 +10,21 @@ mkdir "%SCRIPTS%"
 if errorlevel 1 exit 1
 
 rem build the wrapper: pandoc expects commands like pdflatex to be exe files,
-rem batch files do not work :-/
+rem batch files do not work
 
 rem compile using the MS compilers
-cl -DGUI=0 /MT /Fewrapper.exe "wrapper.c"
+cl -DGUI=0 /MT /Fe:wrapper.exe "%RECIPE_DIR%\wrapper.c"
 if errorlevel 1 exit 1
 
 rem add exe versions for all commands...
-for %%f in ("%LIBRARY_PREFIX%\miktex\miktex\bin\*.exe") do (
+for %%f in ("%LIBRARY_PREFIX%\miktex\texmfs\install\miktex\bin\*.exe") do (
+	echo copy "wrapper.exe" "%SCRIPTS%\%%~nf.exe"
 	copy "wrapper.exe" "%SCRIPTS%\%%~nf.exe"
+	if errorlevel 1 exit 1
 )
-if errorlevel 1 exit 1
 
 del wrapper.exe
+del wrapper.obj
 
 rem DO NOT INSTALL PACKAGES AS ADMIN: it adds a lot of cache files which have
 rem the path hardcoded to the current locations, so let that happen in the user
@@ -38,8 +43,8 @@ echo [Auto]
 echo Config=Regular
 echo.
 echo [PATHS]
-echo CommonInstall=..\..
-echo CommonData=..\..
-echo CommonConfig=..\..
-) > "%PREFIX%\Library\miktex\miktex\config\miktexstartup.ini"
+echo CommonInstall=..\..\..\install
+echo CommonData=..\..\..\data
+echo CommonConfig=..\..\..\config
+) > "%PREFIX%\Library\miktex\texmfs\install\miktex\config\miktexstartup.ini"
 

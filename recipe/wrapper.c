@@ -15,6 +15,10 @@
 #include <fcntl.h>
 #include <process.h>
 
+// http://www.catch22.net/tuts/reducing-executable-size
+// Favour small code
+#pragma optimize("gsy", on)
+
 
 /*if you need it: here is a way to get specific path for different arch... */
 #if __SIZEOF_POINTER__ == 8
@@ -31,7 +35,7 @@ Slashes are need to be included here!
 <path env> really means one dir below the dir where the wrapper is. Which is
 true for <env>\Scripts and <env>\bin
 */
-#define RELATIVE_PATH   "\\Library\\miktex\\miktex\\bin\\"
+#define RELATIVE_PATH   "\\Library\\miktex\\texmfs\\install\\miktex\\bin\\"
 #define EXEC_EXTENSION  ".exe"
 #define DEBUG 0
 
@@ -130,7 +134,7 @@ int create_and_wait_for_subprocess(char* command) {
                         NULL, &s_info, &p_info))
     {
         fprintf(stderr, "failed to create process.\n");
-        return 0;
+        return 1;
     }
     child_pid = p_info.dwProcessId;
     // wait for Python to exit

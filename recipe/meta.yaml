@@ -7,7 +7,7 @@ package:
 source:
   fn: miktex-portable-{{ version }}.exe
   url: http://mirrors.ctan.org/systems/win32/miktex/setup/miktex-portable-{{ version }}.exe
-  sha1: 28232135D6A1A583A31C91676314719A1577C9C0
+  sha1: 28232135d6a1a583a31c91676314719a1577c9c0
 
 build:
   skip: True  # [not win]
@@ -17,12 +17,12 @@ build:
 requirements:
   build:
     - 7za
-    - m2w64-toolchain # to build the wrapper
 
 test:
   commands:
     - pdflatex.exe --help
     - mpm --help
+    - initexmf.exe --report
 
 about:
   home: http://miktex.org/
