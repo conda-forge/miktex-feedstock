@@ -1,33 +1,33 @@
 
+rem I want to see my commands when they go wrong...
+echo on
 
-7za x miktex-portable-%PKG_VERSION%.exe -o%LIBRARY_PREFIX%\miktex >NUL
+rem first compile, so errors are seen early...
+rem build the wrapper: pandoc expects commands like pdflatex to be exe files,
+rem batch files do not work
+
+rem compile using the MS compilers
+cl -DGUI=0 -DDEBUG=0 "%RECIPE_DIR%\wrapper.c"
+if errorlevel 1 exit 1
+
+dumpbin /IMPORTS wrapper.exe
+
+rem extract the beast...
+7za x miktex-portable-%PKG_VERSION%.exe -o%LIBRARY_PREFIX%\miktex
 if errorlevel 1 exit 1
 
 rem SCRIPTS dir should already be created by 7za install
-mkdir "%SCRIPTS%"
-if errorlevel 1 exit 1
+if not exist %SCRIPTS% mkdir %SCRIPTS% || exit 1
 
-rem latex tools must be run from miktex tree - add batch file for everything
-for %%f in ("%LIBRARY_PREFIX%\miktex\miktex\bin\*.exe") do (
-	echo @%%~dp0\..\Library\miktex\miktex\bin\%%~nf %%* >> "%SCRIPTS%\%%~nf.bat"
+rem add exe versions for all commands...
+for %%f in ("%LIBRARY_PREFIX%\miktex\texmfs\install\miktex\bin\*.exe") do (
+	echo copy "wrapper.exe" "%SCRIPTS%\%%~nf.exe"
+	copy "wrapper.exe" "%SCRIPTS%\%%~nf.exe"
+	if errorlevel 1 exit 1
 )
-if errorlevel 1 exit 1
-
-rem build the wrapper: pandoc expects commands like pdflatex to be exe files,
-rem batch files do not work :-/
-
-rem assumes that go is in path, which seems to be true on appveyor
-set GOPATH=c:\gopath
-go get "github.com/kardianos/osext"
-go build -ldflags="-s -w" "%RECIPE_DIR%\wrapper.go"
-if errorlevel 1 exit 1
-
-rem add exe versions for the most important commands--which pandoc tries to
-rem run, as the wrapper.exe is big ...
-for /F %%f in ("pdflatex lualatex xelatex") do copy "wrapper.exe" "%SCRIPTS%\%%f.exe"
-if errorlevel 1 exit 1
 
 del wrapper.exe
+del wrapper.obj
 
 rem DO NOT INSTALL PACKAGES AS ADMIN: it adds a lot of cache files which have
 rem the path hardcoded to the current locations, so let that happen in the user
@@ -46,8 +46,8 @@ echo [Auto]
 echo Config=Regular
 echo.
 echo [PATHS]
-echo CommonInstall=..\..
-echo CommonData=..\..
-echo CommonConfig=..\..
-) > "%PREFIX%\Library\miktex\miktex\config\miktexstartup.ini"
+echo CommonInstall=..\..\..\install
+echo CommonData=..\..\..\data
+echo CommonConfig=..\..\..\config
+) > "%PREFIX%\Library\miktex\texmfs\install\miktex\config\miktexstartup.ini"
 
