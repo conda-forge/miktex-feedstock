@@ -17,8 +17,7 @@ rem extract the beast...
 if errorlevel 1 exit 1
 
 rem SCRIPTS dir should already be created by 7za install
-mkdir "%SCRIPTS%"
-if errorlevel 1 exit 1
+if not exist %SCRIPTS% mkdir %SCRIPTS% || exit 1
 
 rem add exe versions for all commands...
 for %%f in ("%LIBRARY_PREFIX%\miktex\texmfs\install\miktex\bin\*.exe") do (
