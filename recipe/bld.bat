@@ -2,18 +2,22 @@
 rem I want to see my commands when they go wrong...
 echo on
 
+rem first compile, so errors are seen early...
+rem build the wrapper: pandoc expects commands like pdflatex to be exe files,
+rem batch files do not work
+
+rem compile using the MS compilers
+cl -DGUI=0 -DDEBUG=0 "%RECIPE_DIR%\wrapper.c"
+if errorlevel 1 exit 1
+
+dumpbin /IMPORTS wrapper.exe
+
+rem extract the beast...
 7za x miktex-portable-%PKG_VERSION%.exe -o%LIBRARY_PREFIX%\miktex
 if errorlevel 1 exit 1
 
 rem SCRIPTS dir should already be created by 7za install
 mkdir "%SCRIPTS%"
-if errorlevel 1 exit 1
-
-rem build the wrapper: pandoc expects commands like pdflatex to be exe files,
-rem batch files do not work
-
-rem compile using the MS compilers
-cl -DGUI=0 /MT /Fe:wrapper.exe "%RECIPE_DIR%\wrapper.c"
 if errorlevel 1 exit 1
 
 rem add exe versions for all commands...
