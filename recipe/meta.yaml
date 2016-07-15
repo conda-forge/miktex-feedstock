@@ -23,6 +23,8 @@ test:
     - pdflatex.exe --help
     - mpm --help
     - initexmf.exe --report
+    # this is from the problem in matplotlib: it needs to find that font file
+    - kpsewhich cmss10.tfm | findstr cmss10
 
 about:
   home: http://miktex.org/

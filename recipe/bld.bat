@@ -46,8 +46,8 @@ echo [Auto]
 echo Config=Regular
 echo.
 echo [PATHS]
-echo CommonInstall=..\..\..\install
-echo CommonData=..\..\..\data
-echo CommonConfig=..\..\..\config
+echo CommonInstall=..\..\install
+echo CommonData=..\..\data
+echo CommonConfig=..\..\config
 ) > "%PREFIX%\Library\miktex\texmfs\install\miktex\config\miktexstartup.ini"
 
