@@ -1,5 +1,5 @@
 @echo off
-(
+
 rem initialize the per user DB for the current user...
 "%PREFIX%\Library\miktex\texmfs\install\miktex\bin\initexmf.exe" --update-fndb --quiet
 if errorlevel 1 exit 1
@@ -12,4 +12,3 @@ for %%x in (adjustbox booktabs collectbox fancyvrb ifoddpage mptopdf ucs url cap
 	"%PREFIX%\Library\miktex\texmfs\install\miktex\bin\mpm.exe" --quiet --install %%x
 )
 rem No final check as this should succeed even if the conda package is updated and the latex packages are already installed
-) >> $PREFIX%/.messages.txt 2>&1
