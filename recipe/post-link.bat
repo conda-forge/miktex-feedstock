@@ -1,4 +1,8 @@
 @echo off
+rem initialize the per user DB for the current user...
+"%PREFIX%\Library\miktex\texmfs\install\miktex\bin\initexmf.exe" --update-fndb > $PREFIX/.messages.txt 2>&1
+if errorlevel 1 exit 1
+
 rem latex packages which are needed by nbconvert and probably other pdf producers
 rem this is just a convenience install: miktex will install any missing package on the fly
 rem don't check for errors so that this succeeds even if offline, etc...
