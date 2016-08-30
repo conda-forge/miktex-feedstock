@@ -5,18 +5,27 @@ package:
   version: {{ version }}
 
 source:
-  fn: miktex-portable-{{ version }}.exe
-  url: http://mirrors.ctan.org/systems/win32/miktex/setup/miktex-portable-{{ version }}.exe
-  sha1: 28232135d6a1a583a31c91676314719a1577c9c0
-
+  fn: miktex-portable-{{ version }}.exe  # [win]
+  url: http://mirrors.ctan.org/systems/win32/miktex/setup/miktex-portable-{{ version }}.exe  # [win]
+  sha1: 28232135d6a1a583a31c91676314719a1577c9c0  # [win]
+  fn: miktex-2.9-2016-08-17.tar.xz  # [linux]
+  url: http://ctan.cs.uu.nl/systems/win32/miktex/source/  # [linux]
+  sha256: 6fdbd6ffeb3fc16bae6a3b81f78105bbd2fdf236da5248ca3ee4a06f04758f75  # [linux]
+    
 build:
-  skip: True  # [not win]
-  number: 1
+  number: 2
   binary_relocation: false
 
 requirements:
   build:
-    - 7za
+    - 7za  # [win]
+    - cmake  # [linux]
+    - qt  # [linux]
+    - curl  # [linux]
+    - expat  # [linux]
+    - pbzip2  # [linux]
+    - zlib  # [linux]
+    - libpng  # [linux]
 
 test:
   commands:
@@ -25,6 +34,7 @@ test:
     - initexmf.exe --report
     # this is from the problem in matplotlib: it needs to find that font file
     - kpsewhich cmss10.tfm | findstr cmss10
+    - miktex-pdftex --undump=pdflatex miktex-test.tex  # [linux]
 
 about:
   home: http://miktex.org/
