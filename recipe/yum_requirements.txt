@@ -1,0 +1,4 @@
+ImageMagick
+dos2unix
+fop
+libxslt
