@@ -1,4 +1,5 @@
 {% set version = "2.9.5987" %}
+{% set nix_version = "2.9-2016-08-17" %}
 
 package:
   name: miktex
@@ -8,40 +9,40 @@ source:
   fn: miktex-portable-{{ version }}.exe  # [win]
   url: http://mirrors.ctan.org/systems/win32/miktex/setup/miktex-portable-{{ version }}.exe  # [win]
   sha1: 28232135d6a1a583a31c91676314719a1577c9c0  # [win]
-  fn: miktex-2.9-2016-08-17.tar.xz  # [linux]
-  url: http://ctan.cs.uu.nl/systems/win32/miktex/source/miktex-2.9-2016-08-17.tar.xz  # [linux]
-  sha256: 6fdbd6ffeb3fc16bae6a3b81f78105bbd2fdf236da5248ca3ee4a06f04758f75  # [linux]
-    
+  fn: miktex-{{ nix_version }}.tar.xz  # [not win]
+  url: http://ctan.cs.uu.nl/systems/win32/miktex/source/miktex-{{ nix_version }}.tar.xz  # [not win]
+  sha256: 6fdbd6ffeb3fc16bae6a3b81f78105bbd2fdf236da5248ca3ee4a06f04758f75  # [not win]
+
 build:
-  number: 2
+  number: 1
   skip: True  # [osx]
   binary_relocation: false
 
 requirements:
   build:
     - 7za  # [win]
-    - toolchain  # [linux]
-    - cmake  # [linux]
-    - qt  # [linux]
-    - curl  # [linux]
-    - expat  # [linux]
-    - bzp2 1.0.*  # [linux]
-    - zlib 1.2.*  # [linux]
-    - libpng >=1.6.21,<1.7  # [linux]
+    - cmake  # [not win]
+    - bison  # [not win]
+    - flex  # [not win]
+    - qt  # [not win]
+    - curl  # [not win]
+    - expat  # [not win]
+    - bzip2 1.0.*  # [not win]
+    - zlib 1.2.*  # [not win]
+    - libpng >=1.6.23,<1.7  # [not win]
 
 test:
   commands:
-    - pdflatex.exe --help
+    - pdflatex --help
     - mpm --help
-    - initexmf.exe --report
-    # this is from the problem in matplotlib: it needs to find that font file
+    - initexmf --report
+    # This is from the problem in matplotlib: it needs to find that font file.
     - kpsewhich cmss10.tfm | findstr cmss10
-    - miktex-pdftex --undump=pdflatex miktex-test.tex  # [linux]
 
 about:
   home: http://miktex.org/
   license: various, see http://miktex.org/copying
-  summary: Implementation of TeX/LaTeX for Windows (repackaged binaries)
+  summary: Implementation of TeX/LaTeX
 
 extra:
   recipe-maintainers:
