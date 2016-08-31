@@ -4,7 +4,11 @@
 # Any args for CMAKE?
 cmake -G "Ninja" \
 	-Wno-dev \
-	-DWITH_UI_QT:BOOL=OFF
+	-DWITH_UI_QT:BOOL=OFF \
+	-DUSE_SYSTEM_APR:BOOL=OFF \
+	-DUSE_SYSTEM_APRUTIL:BOOL=OFF \
+	-DUSE_SYSTEM_BOTAN:BOOL=OFF \
+	-DUSE_SYSTEM_GD:BOOL=OFF
 	
 ninja install
 
