@@ -1,4 +1,4 @@
-liburiparser
+uriparser
 ImageMagick
 dos2unix
 fop
@@ -6,12 +6,12 @@ libxslt
 xsltproc
 apr-devel
 apr-util-devel
-libbotan
+botan
 libmspack
-libpopt
-libpotrace
+popt
+potrace
 zziplib
 gd-devel
-libgraphite2
-libhunspell 
-liblog4cxx-devel
+graphite2
+hunspell 
+log4cxx
