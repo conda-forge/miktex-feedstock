@@ -21,6 +21,7 @@ build:
 requirements:
   build:
     - 7za  # [win]
+    - ninja  # [not win]
     - cmake  # [not win]
     - bison  # [not win]
     - flex  # [not win]
