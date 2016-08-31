@@ -21,6 +21,7 @@ build:
 requirements:
   build:
     - 7za  # [win]
+    - python 2.7.*  # [not win]
     - ninja  # [not win]
     - cmake  # [not win]
     - bison  # [not win]
