@@ -38,6 +38,7 @@ test:
     - initexmf --report
     # This is from the problem in matplotlib: it needs to find that font file.
     - kpsewhich cmss10.tfm | findstr cmss10
+    - miktex-pdftex --undump=pdflatex miktex-test.tex  # [not win]
 
 about:
   home: http://miktex.org/
