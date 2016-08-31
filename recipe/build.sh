@@ -2,11 +2,13 @@
 
 # Steps from: http://miktex.org/howto/build-unx
 # Any args for CMAKE?
-cmake -G "Ninja" \
+cmake -G "Unix Makefiles" \
 	-Wno-dev \
 	-DWITH_UI_QT:BOOL=OFF
 	
-ninja install
+make
+# Use ninja instead?
+make install
 
 # These steps are optional
 # You use the MiKTeX configuration utility (initexmf) and the MiKTeX package manager (mpm) to configure "MiKTeX Tools" system-wide
