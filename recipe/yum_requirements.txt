@@ -1,0 +1,17 @@
+uriparser
+ImageMagick
+dos2unix
+fop
+libxslt
+xsltproc
+apr-devel
+apr-util-devel
+botan
+libmspack
+popt
+potrace
+zziplib
+gd-devel
+graphite2
+hunspell 
+log4cxx
