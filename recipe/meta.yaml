@@ -31,6 +31,9 @@ requirements:
     - bzip2 1.0.*  # [not win]
     - zlib 1.2.*  # [not win]
     - libpng >=1.6.23,<1.7  # [not win]
+    # For liblzma
+    - xz  # [not win]
+    - mpfr  # [not win]
 
 test:
   commands:

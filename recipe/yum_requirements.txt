@@ -1,5 +1,16 @@
+liburiparser-devel
 ImageMagick
 dos2unix
 fop
 libxslt
+xsltproc
 apr-devel
+botan
+libmspack
+libpopt
+libpotrace
+zziplib-devel
+gd-devel
+libgraphite2
+libhunspell 
+liblog4cxx-devel
