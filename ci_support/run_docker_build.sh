@@ -46,7 +46,7 @@ source run_conda_forge_build_setup
 # "recipe/yum_requirements.txt" file. After updating that file,
 # run "conda smithy rerender" and this line be updated
 # automatically.
-yum install -y liburiparser-devel ImageMagick dos2unix fop libxslt xsltproc apr-devel botan libmspack libpopt libpotrace zziplib-devel gd-devel libgraphite2 libhunspell  liblog4cxx-devel
+yum install -y liburiparser ImageMagick dos2unix fop libxslt xsltproc apr-devel apr-util-devel libbotan libmspack libpopt libpotrace zziplib gd-devel libgraphite2 libhunspell  liblog4cxx-devel
 
 
 # Embarking on 1 case(s).
