@@ -2,3 +2,4 @@ ImageMagick
 dos2unix
 fop
 libxslt
+apr-devel
