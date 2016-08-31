@@ -2,7 +2,7 @@
 
 # Steps from: http://miktex.org/howto/build-unx
 # Any args for CMAKE?
-cmake -G "Ninja" \
+cmake . -G "Ninja" \
 	-Wno-dev \
 	-DWITH_UI_QT:BOOL=OFF \
 	-DUSE_SYSTEM_APR:BOOL=OFF \
@@ -20,7 +20,7 @@ cmake -G "Ninja" \
 	-DUSE_SYSTEM_POPT:BOOL=OFF \
 	-DUSE_SYSTEM_POTRACE:BOOL=OFF \
 	-DUSE_SYSTEM_URIPARSER:BOOL=OFF
-	
+
 ninja install
 
 # These steps are optional
