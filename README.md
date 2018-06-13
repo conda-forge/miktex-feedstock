@@ -11,22 +11,36 @@ Summary: Implementation of TeX/LaTeX for Windows (repackaged binaries)
 
 
 
+Current build status
+====================
+
+[![Windows](https://img.shields.io/appveyor/ci/conda-forge/miktex-feedstock/master.svg?label=Windows)](https://ci.appveyor.com/project/conda-forge/miktex-feedstock/branch/master)
+![Linux disabled](https://img.shields.io/badge/linux-disabled-lightgrey.svg)
+![OSX disabled](https://img.shields.io/badge/OSX-disabled-lightgrey.svg)
+
+Current release info
+====================
+
+| Name | Downloads | Version | Platforms |
+| --- | --- | --- | --- |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-miktex-green.svg)](https://anaconda.org/conda-forge/miktex) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/miktex.svg)](https://anaconda.org/conda-forge/miktex) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/miktex.svg)](https://anaconda.org/conda-forge/miktex) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/miktex.svg)](https://anaconda.org/conda-forge/miktex) |
+
 Installing miktex
 =================
 
-Installing miktex from the conda-forge channel can be achieved by adding conda-forge to your channels with:
+Installing `miktex` from the `conda-forge` channel can be achieved by adding `conda-forge` to your channels with:
 
 ```
 conda config --add channels conda-forge
 ```
 
-Once the conda-forge channel has been enabled, miktex can be installed with:
+Once the `conda-forge` channel has been enabled, `miktex` can be installed with:
 
 ```
 conda install miktex
 ```
 
-It is possible to list all of the versions of miktex available on your platform with:
+It is possible to list all of the versions of `miktex` available on your platform with:
 
 ```
 conda search miktex --channel conda-forge
@@ -51,9 +65,10 @@ packages to the [conda-forge](https://anaconda.org/conda-forge)
 
 To manage the continuous integration and simplify feedstock maintenance
 [conda-smithy](http://github.com/conda-forge/conda-smithy) has been developed.
-Using the ``conda-forge.yml`` within this repository, it is possible to regenerate all of
-this feedstock's supporting files (e.g. the CI configuration files) with ``conda smithy regenerate``.
+Using the ``conda-forge.yml`` within this repository, it is possible to re-render all of
+this feedstock's supporting files (e.g. the CI configuration files) with ``conda smithy rerender``.
 
+For more information please check the [conda-forge documentation](https://conda-forge.org/docs/).
 
 Terminology
 ===========
@@ -67,28 +82,21 @@ Terminology
 **conda-forge** - the place where the feedstock and smithy live and work to
                   produce the finished article (built conda distributions)
 
-Current build status
-====================
-
-Linux: [![Circle CI](https://circleci.com/gh/conda-forge/miktex-feedstock.svg?style=svg)](https://circleci.com/gh/conda-forge/miktex-feedstock)
-OSX: [![TravisCI](https://travis-ci.org/conda-forge/miktex-feedstock.svg?branch=master)](https://travis-ci.org/conda-forge/miktex-feedstock)
-Windows: [![AppVeyor](https://ci.appveyor.com/api/projects/status/github/conda-forge/miktex-feedstock?svg=True)](https://ci.appveyor.com/project/conda-forge/miktex-feedstock/branch/master)
-
-Current release info
-====================
-Version: [![Anaconda-Server Badge](https://anaconda.org/conda-forge/miktex/badges/version.svg)](https://anaconda.org/conda-forge/miktex)
-Downloads: [![Anaconda-Server Badge](https://anaconda.org/conda-forge/miktex/badges/downloads.svg)](https://anaconda.org/conda-forge/miktex)
-
 
 Updating miktex-feedstock
 =========================
 
-If you would like to improve the miktex recipe, please take the normal
-route of forking this repository and submitting a PR. Upon submission, your changes will
-be run on the appropriate platforms to give the reviewer an opportunity to confirm that the
-changes result in a successful build. Once merged, the recipe will be re-built and uploaded
-automatically to the conda-forge channel, whereupon they will be available for everybody to
-install and use.
+If you would like to improve the miktex recipe or build a new
+package version, please fork this repository and submit a PR. Upon submission,
+your changes will be run on the appropriate platforms to give the reviewer an
+opportunity to confirm that the changes result in a successful build. Once
+merged, the recipe will be re-built and uploaded automatically to the
+`conda-forge` channel, whereupon the built conda packages will be available for
+everybody to install and use from the `conda-forge` channel.
+Note that all branches in the conda-forge/miktex-feedstock are
+immediately built and any created packages are uploaded, so PRs should be based
+on branches in forks and branches in the main repository should only be used to
+build distinct package versions.
 
 In order to produce a uniquely identifiable distribution:
  * If the version of a package **is not** being increased, please add or increase
