@@ -6,7 +6,7 @@ package:
 
 source:
   fn: miktex-portable-{{ version }}.exe
-  url: http://mirrors.ctan.org/systems/win32/miktex/setup/miktex-portable-{{ version }}.exe
+  url: http://mirrors.ctan.org/systems/win32/miktex/setup/windows-x86/miktex-portable-{{ version }}.exe
   sha256: cc5a8ef0822378c72a3b95fa43852c740ba8c3b07b440e963db0e73f25a4f213
 
 build:
