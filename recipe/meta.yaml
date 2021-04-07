@@ -11,7 +11,7 @@ source:
 build:
   skip: True  # [not win]
   skip: True  # [win and vc!=14]
-  number: 1000
+  number: 1001
   binary_relocation: false
   ignore_run_exports:
     - vc
