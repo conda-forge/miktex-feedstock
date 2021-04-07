@@ -1,17 +1,17 @@
-{% set version = "2.9.6753" %}
+{% set version = "21.2" %}
 
 package:
   name: miktex
   version: {{ version }}
 
 source:
-  url: http://mirrors.ctan.org/systems/win32/miktex/setup/windows-x86/miktex-portable-{{ version }}.exe
-  sha256: c8b85fc4694d748e8e481ea8e9a31057688c9e16dda8ea7686c00b29b9d6f6e2
+  url: http://mirrors.ctan.org/systems/win32/miktex/setup/windows-x64/basic-miktex-{{ version }}-x64.exe
+  sha256: cb4160f7d3f310ff3490b51004596c2e42d272c08e8a1143d0757ece1ebf9d07
 
 build:
   skip: True  # [not win]
   skip: True  # [win and vc!=14]
-  number: 1001
+  number: 0
   binary_relocation: false
   ignore_run_exports:
     - vc

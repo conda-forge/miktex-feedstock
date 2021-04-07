@@ -13,14 +13,14 @@ if errorlevel 1 exit 1
 dumpbin /IMPORTS wrapper.exe
 
 rem extract the beast...
-7za x miktex-portable-%PKG_VERSION%.exe -o%LIBRARY_PREFIX%\miktex
+start /WAIT /B basic-miktex-%PKG_VERSION%-x64.exe --portable=%LIBRARY_PREFIX%\miktex --unattended
 if errorlevel 1 exit 1
 
 rem SCRIPTS dir should already be created by 7za install
 if not exist %SCRIPTS% mkdir %SCRIPTS% || exit 1
 
 rem add exe versions for all commands...
-for %%f in ("%LIBRARY_PREFIX%\miktex\texmfs\install\miktex\bin\*.exe") do (
+for %%f in ("%LIBRARY_PREFIX%\miktex\texmfs\install\miktex\bin\x64\*.exe") do (
 	echo copy "wrapper.exe" "%SCRIPTS%\%%~nf.exe"
 	copy "wrapper.exe" "%SCRIPTS%\%%~nf.exe"
 	if errorlevel 1 exit 1
