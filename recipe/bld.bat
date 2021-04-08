@@ -21,7 +21,9 @@ echo Extracting...
 rem start "" /WAIT "basic-miktex-%PKG_VERSION%-x64.exe" --portable="%LIBRARY_PREFIX%\miktex" --unattended
 
 ren basic-miktex-%PKG_VERSION%-x64.exe miktex-portable.exe
-miktex-portable --portable="%LIBRARY_PREFIX%\miktex" --unattended
+
+start "" /B miktex-portable.exe --portable="%LIBRARY_PREFIX%\miktex" --unattended
+
 echo %ERRORLEVEL%
 
 tasklist | find "miktex"
