@@ -12,8 +12,17 @@ if errorlevel 1 exit 1
 
 dumpbin /IMPORTS wrapper.exe
 
+rem [remove] debugging stuff...
+dir /s/b
+
 rem extract the beast...
+echo Extracting...
 start /WAIT /B basic-miktex-%PKG_VERSION%-x64.exe --portable=%LIBRARY_PREFIX%\miktex --unattended
+echo Extracted...
+
+rem [remove] debugging stuff...
+dir /s/b
+
 if errorlevel 1 exit 1
 
 rem SCRIPTS dir should already be created by 7za install
