@@ -22,19 +22,12 @@ rem start "" /WAIT "basic-miktex-%PKG_VERSION%-x64.exe" --portable="%LIBRARY_PRE
 
 ren basic-miktex-%PKG_VERSION%-x64.exe miktex-portable.exe
 
-start "" /B miktex-portable.exe --portable="%LIBRARY_PREFIX%\miktex" --unattended
+rem start "" /B miktex-portable.exe --portable="%LIBRARY_PREFIX%\miktex" --unattended
+miktex-portable.exe --portable="%LIBRARY_PREFIX%\miktex" --unattended
 
 echo %ERRORLEVEL%
 
-tasklist | find "miktex"
-
-sleep 2
-tasklist | find "miktex"
-dir /s/b
-dir /s/b "%LIBRARY_PREFIX%\miktex"
-
-sleep 120
-tasklist | find "miktex"
+tasklist | grep "miktex"
 dir /s/b
 dir /s/b "%LIBRARY_PREFIX%\miktex"
 type "%LIBRARY_PREFIX%\miktex\texmfs\install\miktex\config\setup*.log"
@@ -48,19 +41,9 @@ type "%LIBRARY_PREFIX%\miktex\texmfs\install\miktex\config\setup*.log"
 echo Extracted...
 
 rem [remove] debugging stuff...
-dir /s/b
-
-dir /s/b %LIBRARY_PREFIX%\miktex
-
-sleep 120
-tasklist | find "miktex"
-
-dir /s/b
-
-dir /s/b %LIBRARY_PREFIX%\miktex
 
 
-if errorlevel 1 exit 1
+rem if errorlevel 1 exit 1
 
 rem SCRIPTS dir should already be created by 7za install
 if not exist %SCRIPTS% mkdir %SCRIPTS% || exit 1
