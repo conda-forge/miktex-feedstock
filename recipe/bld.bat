@@ -17,14 +17,28 @@ dir /s/b
 
 rem extract the beast...
 echo Extracting...
-start "" /WAIT /B basic-miktex-%PKG_VERSION%-x64.exe --portable=%LIBRARY_PREFIX%\miktex --unattended
+echo start "" /WAIT "basic-miktex-%PKG_VERSION%-x64.exe" --portable="%LIBRARY_PREFIX%\miktex" --unattended
+start "" /WAIT "basic-miktex-%PKG_VERSION%-x64.exe" --portable="%LIBRARY_PREFIX%\miktex" --unattended
+
+tasklist | find "miktex"
+sleep 2
+tasklist | find "miktex"
+
 echo %ERRORLEVEL%
 echo Extracted...
 
-start /?
-
 rem [remove] debugging stuff...
 dir /s/b
+
+dir /s/b %LIBRARY_PREFIX%\miktex
+
+sleep 120
+tasklist | find "miktex"
+
+dir /s/b
+
+dir /s/b %LIBRARY_PREFIX%\miktex
+
 
 if errorlevel 1 exit 1
 
