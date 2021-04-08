@@ -30,20 +30,19 @@ start "" /B miktex-portable.exe --portable="%LIBRARY_PREFIX%\miktex" --unattende
 
 echo %ERRORLEVEL%
 
-tasklist | grep "miktex"
+tasklist /FI "IMAGENAME eq miktex-portable.exe"
 dir /s/b
 dir /s/b "%LIBRARY_PREFIX%\miktex"
 type "%LIBRARY_PREFIX%\miktex\texmfs\install\miktex\config\setup*.log"
 
 sleep 600
-tasklist | find "miktex"
-dir /s/b
+tasklist /FI "IMAGENAME eq miktex-portable.exe"
 dir /s/b "%LIBRARY_PREFIX%\miktex"
 dir /s/b "%LIBRARY_PREFIX%\miktex" | wc -l
 type "%LIBRARY_PREFIX%\miktex\texmfs\install\miktex\config\setup*.log"
 
 sleep 600
-tasklist | find "miktex"
+tasklist /FI "IMAGENAME eq miktex-portable.exe"
 dir /s/b "%LIBRARY_PREFIX%\miktex" | wc -l
 type "%LIBRARY_PREFIX%\miktex\texmfs\install\miktex\config\setup*.log"
 
