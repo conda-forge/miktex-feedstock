@@ -18,12 +18,15 @@ dir /s/b
 rem extract the beast...
 echo Extracting...
 
+rem calling it like this, with WAIT, does not work...
 rem start "" /WAIT "basic-miktex-%PKG_VERSION%-x64.exe" --portable="%LIBRARY_PREFIX%\miktex" --unattended
 
 ren basic-miktex-%PKG_VERSION%-x64.exe miktex-portable.exe
 
-rem start "" /B miktex-portable.exe --portable="%LIBRARY_PREFIX%\miktex" --unattended
-miktex-portable.exe --portable="%LIBRARY_PREFIX%\miktex" --unattended
+rem calling it like this, without start, hangs the CI for more than one hour...
+rem miktex-portable.exe --portable="%LIBRARY_PREFIX%\miktex" --unattended
+
+start "" /B miktex-portable.exe --portable="%LIBRARY_PREFIX%\miktex" --unattended
 
 echo %ERRORLEVEL%
 
@@ -36,6 +39,12 @@ sleep 600
 tasklist | find "miktex"
 dir /s/b
 dir /s/b "%LIBRARY_PREFIX%\miktex"
+dir /s/b "%LIBRARY_PREFIX%\miktex" | wc -l
+type "%LIBRARY_PREFIX%\miktex\texmfs\install\miktex\config\setup*.log"
+
+sleep 600
+tasklist | find "miktex"
+dir /s/b "%LIBRARY_PREFIX%\miktex" | wc -l
 type "%LIBRARY_PREFIX%\miktex\texmfs\install\miktex\config\setup*.log"
 
 echo Extracted...
