@@ -1,30 +1,37 @@
-{% set version = "2.9.6753" %}
+{% set version = "22.8.28" %}
 
 package:
   name: miktex
   version: {{ version }}
 
 source:
-  url: http://mirrors.ctan.org/systems/win32/miktex/setup/windows-x86/miktex-portable-{{ version }}.exe
-  sha256: c8b85fc4694d748e8e481ea8e9a31057688c9e16dda8ea7686c00b29b9d6f6e2
+  # Newer "basic" installers do not seem to lend themselves for effortless
+  # unattended installs. Hence, we resort to using the CLI installer.
+  # Caveats:
+  # - Installer version is not bound to the MiKTeX distribution version.
+  # - Actual package content is downloaded on the fly, independent of installer.
+  # The tests below check for consistent package <-> content versioning.
+  url: https://mirror.ctan.org/systems/win32/miktex/setup/windows-x64/miktexsetup-4.2-x64.zip
+  sha256: e866f27aa24ea0ca27eecc631abae3e750e42a94a49a01814d686b0bd2e14877
 
 build:
   skip: True  # [not win]
-  skip: True  # [win and vc!=14]
-  number: 1000
+  number: 0
   binary_relocation: false
   ignore_run_exports:
     - vc
 
 requirements:
   build:
-    - 7za
     - {{ compiler("c") }}
+  host:
   run:
     - vs2015_runtime
 
 test:
   commands:
+    - miktex --version
+    - miktex --version | findstr "/C:{{ version }} Portable"
     - pdflatex.exe --help
     - mpm --help
     - initexmf.exe --report

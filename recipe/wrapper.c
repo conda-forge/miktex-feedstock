@@ -47,7 +47,9 @@ Slashes are need to be included here!
 <path env> really means one dir below the dir where the wrapper is. Which is
 true for <env>\Scripts and <env>\bin
 */
-#define RELATIVE_PATH   "\\Library\\miktex\\texmfs\\install\\miktex\\bin\\"
+#if !defined(RELATIVE_PATH)
+    #define RELATIVE_PATH "\\Library\\miktex\\texmfs\\install\\miktex\\bin\\"
+#endif
 #define EXEC_EXTENSION  ".exe"
 #if !defined(DEBUG)
     #define DEBUG 0

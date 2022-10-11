@@ -1,29 +1,57 @@
+@echo on
+setlocal EnableDelayedExpansion
 
-rem I want to see my commands when they go wrong...
-echo on
+set "install_prefix=%LIBRARY_PREFIX%\miktex"
+set "common_config=%install_prefix%\texmfs\config"
+set "common_data=%install_prefix%\texmfs\data"
+set "common_install=%install_prefix%\texmfs\install"
+
+set "miktex_bin=%common_install%\miktex\bin\x64"
+set "relative_path=!miktex_bin:%PREFIX%=!\"
+set "pkg_repo=%CD%\repo"
+set "package_set=essential"
+
 
 rem first compile, so errors are seen early...
 rem build the wrapper: pandoc expects commands like pdflatex to be exe files,
 rem batch files do not work
 
 rem compile using the MS compilers
-cl -DGUI=0 -DDEBUG=0 "%RECIPE_DIR%\wrapper.c"
+cl -DGUI=0 -DDEBUG=0 ^
+    "-DRELATIVE_PATH=\"!relative_path:\=\\!\\\"" ^
+    "%RECIPE_DIR%\wrapper.c"
 if errorlevel 1 exit 1
 
 dumpbin /IMPORTS wrapper.exe
 
-rem extract the beast...
-7za x miktex-portable-%PKG_VERSION%.exe -o%LIBRARY_PREFIX%\miktex
+
+rem install the beast...
+.\miktexsetup_standalone.exe ^
+    --verbose ^
+    "--local-package-repository=%pkg_repo%" ^
+    "--package-set=%package_set%" ^
+    download
 if errorlevel 1 exit 1
 
-rem SCRIPTS dir should already be created by 7za install
+.\miktexsetup_standalone.exe ^
+    --verbose ^
+    "--local-package-repository=%pkg_repo%" ^
+    "--package-set=%package_set%" ^
+    --use-registry=no ^
+    "--portable=%install_prefix%" ^
+    "--common-config=%common_config%" ^
+    "--common-data=%common_data%" ^
+    "--common-install=%common_install%" ^
+    install
+if errorlevel 1 exit 1
+
+
 if not exist %SCRIPTS% mkdir %SCRIPTS% || exit 1
 
 rem add exe versions for all commands...
-for %%f in ("%LIBRARY_PREFIX%\miktex\texmfs\install\miktex\bin\*.exe") do (
-	echo copy "wrapper.exe" "%SCRIPTS%\%%~nf.exe"
-	copy "wrapper.exe" "%SCRIPTS%\%%~nf.exe"
-	if errorlevel 1 exit 1
+for %%f in ("%miktex_bin%\*.exe") do (
+    copy "wrapper.exe" "%SCRIPTS%\%%~nf.exe"
+    if errorlevel 1 exit 1
 )
 
 del wrapper.exe
