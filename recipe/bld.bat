@@ -57,27 +57,23 @@ for %%f in ("%miktex_bin%\*.exe") do (
 del wrapper.exe
 del wrapper.obj
 
-rem DO NOT INSTALL PACKAGES AS ADMIN: it adds a lot of cache files which have
-rem the path hardcoded to the current locations, so let that happen in the user
-rem install and on the users machine:
 
-rem Change the install variant to a regular one, so that latex packages
-rem installed by the user go into the users home directory...
-(
-echo ;;; MiKTeX startup information
-echo.
-echo ;;; The effect of this file is that the main install location in the conda env
-echo ;;; is not touched by the latex package installer and all packages are installed
-echo ;;; into a location under USERPROFILE.
-echo.
-echo [Auto]
-echo Config=Regular
-echo.
-echo [PATHS]
-echo CommonInstall=..\..\install
-echo CommonData=..\..\data
-echo CommonConfig=..\..\config
-) > "%PREFIX%\Library\miktex\texmfs\install\miktex\config\miktexstartup.ini"
+rem Make miktex install packages automatically *without* asking...
+initexmf --set-config-value [MPM]AutoInstall=1
+if errorlevel 1 exit 1
 
-rem Also make miktex install packages automatically *without* asking
-initexmf.exe --set-config-value [MPM]AutoInstall=1
+rem Update package database...
+miktex packages update-package-database
+if errorlevel 1 exit 1
+
+rem latex packages which are needed by nbconvert and probably other pdf producers
+rem this is just a convenience install: miktex will install any missing package on the fly
+miktex packages install ^
+    adjustbox booktabs collectbox fancyvrb ifoddpage mptopdf ucs url caption xcolor upquote ulem mathpazo
+if errorlevel 1 exit 1
+
+rem Update packages and filename database...
+miktex packages update
+if errorlevel 1 exit 1
+miktex fndb refresh
+if errorlevel 1 exit 1

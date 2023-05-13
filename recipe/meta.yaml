@@ -17,7 +17,16 @@ source:
 build:
   skip: True  # [not win]
   number: 0
+  # This only re-packages already relocatable binaries (and add small relocatable wrappers).
   binary_relocation: false
+  # This is a "portable" installation that modifies itself in-place.
+  # => At least mark typical config/cache files to be always copied.
+  no_link:
+    - Library/miktex/texmfs/config/miktex/*
+    - Library/miktex/texmfs/data/miktex/*
+    - Library/miktex/texmfs/install/miktex/config/*
+    - Library/miktex/texmfs/install/miktex/data/*
+    - Library/miktex/texmfs/install/miktex/lock/*
   ignore_run_exports:
     - vc
 
@@ -32,8 +41,10 @@ test:
   commands:
     - miktex --version
     - miktex --version | findstr "/C:(MiKTeX {{ version }} Portable)"
+    - miktex packages verify
     - pdflatex.exe --help
     - mpm --help
+    - mpm --verify
     - initexmf.exe --report
     # this is from the problem in matplotlib: it needs to find that font file
     - kpsewhich cmss10.tfm | findstr cmss10
