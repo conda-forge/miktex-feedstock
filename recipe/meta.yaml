@@ -1,32 +1,49 @@
-{% set version = "2.9.6753" %}
+{% set version = "23.5" %}
 
 package:
   name: miktex
   version: {{ version }}
 
 source:
-  url: http://mirrors.ctan.org/systems/win32/miktex/setup/windows-x86/miktex-portable-{{ version }}.exe
-  sha256: c8b85fc4694d748e8e481ea8e9a31057688c9e16dda8ea7686c00b29b9d6f6e2
+  # Newer "basic" installers do not seem to lend themselves for effortless
+  # unattended installs. Hence, we resort to using the CLI installer.
+  # Caveats:
+  # - Installer version is not bound to the MiKTeX distribution version.
+  # - Actual package content is downloaded on the fly, independent of installer.
+  # The tests below check for consistent package <-> content versioning.
+  url: https://mirror.ctan.org/systems/win32/miktex/setup/windows-x64/miktexsetup-5.5.0%2B1763023-x64.zip
+  sha256: 0571e90f6d94353089b4f189fd82a532f9fe559a388c7e7f1102b14b3c1ae27d
 
 build:
   skip: True  # [not win]
-  skip: True  # [win and vc!=14]
-  number: 1000
+  number: 0
+  # This only re-packages already relocatable binaries (and add small relocatable wrappers).
   binary_relocation: false
-  ignore_run_exports:
-    - vc
+  # This is a "portable" installation that modifies itself in-place.
+  # => At least mark typical config/cache files to be always copied.
+  no_link:
+    - Library/miktex/texmfs/config/miktex/*
+    - Library/miktex/texmfs/data/miktex/*
+    - Library/miktex/texmfs/install/miktex/config/*
+    - Library/miktex/texmfs/install/miktex/data/*
+    - Library/miktex/texmfs/install/miktex/lock/*
 
 requirements:
   build:
-    - 7za
     - {{ compiler("c") }}
+    - m2-bash
+    - symlink-exe-build
+  host:
   run:
-    - vs2015_runtime
 
 test:
   commands:
+    - miktex --version
+    - miktex --version | findstr "/C:(MiKTeX {{ version }} Portable)"
+    - miktex packages verify
     - pdflatex.exe --help
     - mpm --help
+    - mpm --verify
     - initexmf.exe --report
     # this is from the problem in matplotlib: it needs to find that font file
     - kpsewhich cmss10.tfm | findstr cmss10
@@ -39,3 +56,4 @@ about:
 extra:
   recipe-maintainers:
     - jankatins
+    - mbargull
