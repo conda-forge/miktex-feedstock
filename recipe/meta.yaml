@@ -27,15 +27,14 @@ build:
     - Library/miktex/texmfs/install/miktex/config/*
     - Library/miktex/texmfs/install/miktex/data/*
     - Library/miktex/texmfs/install/miktex/lock/*
-  ignore_run_exports:
-    - vc
 
 requirements:
   build:
     - {{ compiler("c") }}
+    - m2-bash
+    - symlink-exe-build
   host:
   run:
-    - vs2015_runtime
 
 test:
   commands:
