@@ -1,4 +1,4 @@
-{% set version = "23.5" %}
+{% set version = "24.4" %}
 
 package:
   name: miktex
