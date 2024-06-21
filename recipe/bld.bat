@@ -52,6 +52,67 @@ rem this is just a convenience install: miktex will install any missing package 
 miktex packages install ^
     adjustbox booktabs collectbox fancyvrb ifoddpage mptopdf ucs url caption xcolor upquote ulem mathpazo
 if errorlevel 1 exit 1
+rem additional packages from Library/miktex/texmfs/install/tpm/packages in r-base=4.3.3 build
+miktex packages install ^
+    amsfonts ^
+    amsmath ^
+    atbegshi ^
+    atveryend ^
+    babel ^
+    bigintcalc ^
+    bitset ^
+    cm ^
+    dvips ^
+    ec ^
+    epstopdf-pkg ^
+    etex ^
+    etoolbox ^
+    gettitlestring ^
+    graphics-cfg ^
+    graphics-def ^
+    graphics ^
+    helvetic ^
+    hycolor ^
+    hyperref ^
+    iftex ^
+    inconsolata ^
+    infwarerr ^
+    intcalc ^
+    jknappen ^
+    knuth-lib ^
+    kvdefinekeys ^
+    kvoptions ^
+    kvsetkeys ^
+    l3backend ^
+    l3kernel ^
+    latex-firstaid ^
+    latex-fonts ^
+    latex-tools ^
+    lm ^
+    ltxbase ^
+    ltxcmds ^
+    metafont ^
+    miktex-etex ^
+    miktex-latex ^
+    miktex-metafont ^
+    miktex-pdftex ^
+    modes ^
+    pdfescape ^
+    pdftex ^
+    pdftexcmds ^
+    plain ^
+    psnfss ^
+    refcount ^
+    rerunfilecheck ^
+    rsfs ^
+    stringenc ^
+    tex-ini-files ^
+    texinfo ^
+    times ^
+    unicode-data ^
+    uniquecounter ^
+    xkeyval
+if errorlevel 1 exit 1
 
 rem Update packages and filename database...
 miktex packages update
