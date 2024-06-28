@@ -22,9 +22,9 @@ jobs:
             "C:\hostedtoolcache\windows";
         )
 
-        $robocopy_flags = "
+        $robocopy_flags = @'
             /mir /mt /zb /ns /nc /nfl /ndl /np /njh /njs /r:0 /w:0
-        "
+        '@
         $empty_dir = "C:\empty"
         mkdir $empty_dir
         foreach ($d in $cleanup_dirs) {
