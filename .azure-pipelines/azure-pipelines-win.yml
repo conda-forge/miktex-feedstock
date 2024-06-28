@@ -22,12 +22,15 @@ jobs:
             "C:\hostedtoolcache\windows";
         )
 
+        $robocopy_flags = "
+            /mir /mt /zb /ns /nc /nfl /ndl /np /njh /njs /r:0 /w:0
+        "
         $empty_dir = "C:\empty"
         mkdir $empty_dir
         foreach ($d in $cleanup_dirs) {
             if ($d -and (Test-Path $d)) {
                 echo "Removing $d"
-                robocopy /mir /mt /zb /ns /nc /nfl /ndl /np /njh /njs $empty_dir $d 2>&1>$null
+                robocopy $robocopy_flags $empty_dir $d 2>&1>$null
                 Remove-Item $d -Force
             }
         }
