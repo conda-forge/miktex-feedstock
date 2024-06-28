@@ -30,6 +30,7 @@ build:
 
 requirements:
   build:
+    - {{ stdlib("c") }}
     - {{ compiler("c") }}
     - m2-bash
     - symlink-exe-build
