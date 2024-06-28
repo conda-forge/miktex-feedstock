@@ -23,7 +23,7 @@ jobs:
         )
 
         $robocopy_flags = @'
-            /mir /mt /zb /ns /nc /nfl /ndl /np /njh /njs /r:0 /w:0
+        /mir /mt /zb /ns /nc /nfl /ndl /np /njh /njs /r:0 /w:0
         '@
         $empty_dir = "C:\empty"
         mkdir $empty_dir
