@@ -25,7 +25,7 @@ jobs:
         $empty_dir = "C:\empty"
         mkdir $empty_dir
         foreach ($d in $cleanup_dirs) {
-            if ($d) {
+            if ($d -and (Test-Path $d)) {
                 echo "Removing $d"
                 robocopy /mir /mt /zb /ns /nc /nfl /ndl /np /njh /njs $empty_dir $d 2>&1>$null
                 Remove-Item $d -Force
