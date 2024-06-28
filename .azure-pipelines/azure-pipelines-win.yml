@@ -22,16 +22,17 @@ jobs:
             "C:\hostedtoolcache\windows";
         )
 
-        mkdir C:\empty
+        $empty_dir = "C:\empty"
+        mkdir $empty_dir
         foreach ($d in $cleanup_dirs) {
             if ($d) {
                 echo "Removing $d"
                 dir $d
                 robocopy /mir /mt /zb /ns /nc /nfl /ndl /np /njh /njs C:\empty %$d 2>&1>$null
-                Remove-Item -Force $d
+                Remove-Item $d -Force
             }
         }
-        Remove-Item -Force C:\empty
+        Remove-Item  $empty_dir -Force
         wmic logicaldisk get size,freespace,caption
       displayName: Manage disk space
 
