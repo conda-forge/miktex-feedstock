@@ -18,7 +18,6 @@ jobs:
 
   steps:
     - powershell: |
-        #Requires -RunAsAdministrator
         $cleanup_dirs = @(
             "C:\hostedtoolcache\windows";
         )
@@ -28,13 +27,11 @@ jobs:
         foreach ($d in $cleanup_dirs) {
             if ($d) {
                 echo "Removing $d"
-                dir $d
                 robocopy /mir /mt /zb /ns /nc /nfl /ndl /np /njh /njs $empty_dir $d 2>&1>$null
                 Remove-Item $d -Force
             }
         }
         Remove-Item  $empty_dir -Force
-        wmic logicaldisk get size,freespace,caption
       displayName: Manage disk space
 
     - powershell: |
