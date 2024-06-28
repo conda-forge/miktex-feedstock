@@ -28,10 +28,10 @@ jobs:
                 echo "Removing $d"
                 dir $d
                 robocopy /mir /mt /zb /ns /nc /nfl /ndl /np /njh /njs C:\empty %$d 2>&1>$null
-                rmdir $d
+                rm -force $d
             }
         }
-        rmdir /q C:\empty
+        rm -force C:\empty
         wmic logicaldisk get size,freespace,caption
       displayName: Manage disk space
 
