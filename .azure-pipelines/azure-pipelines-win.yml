@@ -18,6 +18,7 @@ jobs:
 
   steps:
     - powershell: |
+        #Requires -RunAsAdministrator
         $cleanup_dirs = @(
             "C:\hostedtoolcache\windows";
         )
