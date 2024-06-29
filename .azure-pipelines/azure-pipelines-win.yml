@@ -19,23 +19,21 @@ jobs:
   steps:
     - powershell: |
         $cleanup_dirs = @(
-            "C:\hostedtoolcache\windows"
+            "C:\hostedtoolcache\windows";
         )
 
-        $robocopy_flags = @(
-            "/mir", "/nocopy", "/nodcopy", "/mt"
-            "/ns", "/nc", "/np", "/nfl", "/ndl", "/njh", "/njs"
-        )
         $empty_dir = "C:\empty"
-        mkdir $empty_dir 2>&1>$null
+        mkdir $empty_dir
         foreach ($d in $cleanup_dirs) {
-            if ($d -and (Test-Path $d)) {
+            if ($d) {
                 echo "Removing $d"
-                robocopy @robocopy_flags $empty_dir $d 2>&1>$null
+                dir $d
+                robocopy /mir /mt /zb /ns /nc /nfl /ndl /np /njh /njs $empty_dir $d 2>&1>$null
                 Remove-Item $d -Force
             }
         }
         Remove-Item  $empty_dir -Force
+        wmic logicaldisk get size,freespace,caption
       displayName: Manage disk space
 
     - powershell: |
