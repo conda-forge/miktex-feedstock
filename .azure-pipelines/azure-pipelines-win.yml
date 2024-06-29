@@ -19,7 +19,7 @@ jobs:
   steps:
     - powershell: |
         $cleanup_dirs = @(
-            "C:\hostedtoolcache\windows";
+            "C:\hostedtoolcache\windows"
         )
 
         $robocopy_flags = @(
@@ -31,7 +31,7 @@ jobs:
         foreach ($d in $cleanup_dirs) {
             if ($d -and (Test-Path $d)) {
                 echo "Removing $d"
-                robocopy $robocopy_flags $empty_dir $d 2>&1>$null
+                robocopy @robocopy_flags $empty_dir $d 2>&1>$null
                 Remove-Item $d -Force
             }
         }
