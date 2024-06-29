@@ -23,7 +23,7 @@ jobs:
         )
 
         $robocopy_flags = @(
-            "/purge", "/r:0", "/w:0", "/nocopy", "/nodcopy", "/mt", "/zb"
+            "/purge", "/r:0", "/w:0", "/mt"
             "/ns", "/nc", "/np", "/nfl", "/ndl", "/njh", "/njs"
         )
         $empty_dir = "C:\empty"
