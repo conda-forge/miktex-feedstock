@@ -36,7 +36,6 @@ jobs:
             }
         }
         Remove-Item -Path $empty_dir -Force
-        wmic logicaldisk get size,freespace,caption
       displayName: Manage disk space
 
     - powershell: |
