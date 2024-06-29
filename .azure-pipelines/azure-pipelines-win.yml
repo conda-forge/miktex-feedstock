@@ -28,7 +28,7 @@ jobs:
             if ($d) {
                 echo "Removing $d"
                 dir $d
-                robocopy /mir /mt /zb /ns /nc /nfl /ndl /np /njh /njs $empty_dir $d 2>&1>$null
+                robocopy /purge /r:0 /w:0 /nocopy /mt /ns /nc /nfl /ndl /np /njh /njs $empty_dir $d 2>&1>$null
                 Remove-Item $d -Force
             }
         }
