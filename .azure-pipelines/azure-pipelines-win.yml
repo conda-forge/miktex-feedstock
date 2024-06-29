@@ -32,10 +32,10 @@ jobs:
             if ($d -and (Test-Path $d)) {
                 echo "Removing $d"
                 robocopy @robocopy_flags $empty_dir $d 2>&1>$null
-                Remove-Item -Path $d -Recurse -Force
+                Remove-Item -Path $d -Recurse -Force -ErrorAction SilentlyContinue
             }
         }
-        Remove-Item -Path $empty_dir -Recurse -Force
+        Remove-Item -Path $empty_dir -Recurse -Force -ErrorAction SilentlyContinue
       displayName: Manage disk space
 
     - powershell: |
