@@ -23,11 +23,11 @@ jobs:
         )
 
         $robocopy_flags = @(
-            "/purge", "/r:0", "/w:0", "/nocopy", "/mt"
+            "/mir", "/nocopy", "/nodcopy", "/mt"
             "/ns", "/nc", "/nfl", "/ndl", "/np", "/njh", "/njs"
         )
         $empty_dir = "C:\empty"
-        mkdir $empty_dir
+        mkdir $empty_dir 2>&1>$null
         foreach ($d in $cleanup_dirs) {
             if ($d -and (Test-Path $d)) {
                 echo "Removing $d"
