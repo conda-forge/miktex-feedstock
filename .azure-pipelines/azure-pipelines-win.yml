@@ -17,16 +17,33 @@ jobs:
     UPLOAD_TEMP: D:\\tmp
 
   steps:
+    - powershell: |
+        $cleanup_dirs = @(
+            "C:\hostedtoolcache\windows"
+        )
 
-    - task: PythonScript@0
-      displayName: 'Download Miniforge'
-      inputs:
-        scriptSource: inline
-        script: |
-          import urllib.request
-          url = 'https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-Windows-x86_64.exe'
-          path = r"$(Build.ArtifactStagingDirectory)/Miniforge.exe"
-          urllib.request.urlretrieve(url, path)
+        $robocopy_flags = @(
+            "/purge", "/r:0", "/w:0", "/mt"
+            "/ns", "/nc", "/np", "/nfl", "/ndl", "/njh", "/njs"
+        )
+        $empty_dir = "C:\empty"
+        mkdir $empty_dir 2>&1>$null
+        foreach ($d in $cleanup_dirs) {
+            if ($d -and (Test-Path $d)) {
+                echo "Removing $d"
+                robocopy @robocopy_flags $empty_dir $d 2>&1>$null
+                Remove-Item -Path $d -Recurse -Force -ErrorAction SilentlyContinue
+            }
+        }
+        Remove-Item -Path $empty_dir -Recurse -Force -ErrorAction SilentlyContinue
+      displayName: Manage disk space
+
+    - powershell: |
+        Invoke-WebRequest $env:MINIFORGE_URL -OutFile $env:MINIFORGE_PATH
+      displayName: "Download Miniforge"
+      env:
+        MINIFORGE_URL: https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-Windows-x86_64.exe
+        MINIFORGE_PATH: $(Build.ArtifactStagingDirectory)/Miniforge.exe
 
     - script: |
         start /wait "" %BUILD_ARTIFACTSTAGINGDIRECTORY%\Miniforge.exe /InstallationType=JustMe /RegisterPython=0 /S /D=C:\Miniforge
